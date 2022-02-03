@@ -6,6 +6,8 @@ from .text_default import text_default
 class Category(models.Model):
     category = models.CharField('Категория', max_length=100)
 
+    def __str__(self):
+        return str(self.category)
 
 class Product(models.Model):
     """
@@ -24,6 +26,8 @@ class Product(models.Model):
     sell = models.BooleanField('Продано', default=False)
 
     day_created = models.DateTimeField('Дата создания', auto_now_add=True)
+
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
 
     class Meta:
         verbose_name = 'Пост'
