@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from pprint import pprint
+
 import MySQLdb
 
 connect = MySQLdb.connect('localhost', 'root', 'I1QEvAR503', 'tune')
@@ -17,3 +19,11 @@ def get_products(category_id):
     cursor.execute(sql)
     result = cursor.fetchall()
     return result
+
+
+def get_detail_product(name_product):
+    sql = f"SELECT * FROM tune_admin_product WHERE name = '{name_product}'"
+    cursor.execute(sql)
+
+    return cursor.fetchall()[0]
+

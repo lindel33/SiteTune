@@ -1,13 +1,34 @@
-
+import blank
 from django.db import models
 from .text_default import text_default
+from .new_post import send_post
+import datetime
+
+today = datetime.date.today()
+tomorrow = today + datetime.timedelta(days=4)
 
 
 class Category(models.Model):
     category = models.CharField('Категория', max_length=100)
 
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+
     def __str__(self):
         return str(self.category)
+
+
+class SeriesCategory(models.Model):
+    category = models.CharField('Категория', max_length=100)
+
+    class Meta:
+        verbose_name = 'Серия'
+        verbose_name_plural = 'Серии'
+
+    def __str__(self):
+        return str(self.category)
+
 
 class Product(models.Model):
     """
@@ -26,13 +47,19 @@ class Product(models.Model):
     sell = models.BooleanField('Продано', default=False)
 
     day_created = models.DateTimeField('Дата создания', auto_now_add=True)
-
+    next_edition = models.DateTimeField('Дата новой публикации', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
+    series = models.ForeignKey(SeriesCategory, on_delete=models.CASCADE, verbose_name='Серия', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
 
+    def save(self, *args, **kwargs):
+        if not self.sell:
+            # send_post([self.image_1.url, self.image_2.url, self.image_3.url], caption=self.text)
+            pass
+        super().save(*args, **kwargs)
 
 
 
