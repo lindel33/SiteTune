@@ -10,11 +10,11 @@ chat_id = -1001392557374
 
 def send_post(media: list, caption):
     pprint(media)
-    f1 = open('media/' + media[0], 'rb')
+    f1 = open(media[0], 'rb')
     f1 = f1.read()
-    f2 = open('media/' + media[1], 'rb')
+    f2 = open(media[1], 'rb')
     f2 = f2.read()
-    f3 = open('media/' + media[2], 'rb')
+    f3 = open(media[2], 'rb')
     f3 = f3.read()
     bot.send_media_group(chat_id=chat_id, media=[
         telebot.types.InputMediaPhoto(f1, caption=caption),

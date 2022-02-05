@@ -1,4 +1,3 @@
-import blank
 from django.db import models
 from .text_default import text_default
 from .new_post import send_post
@@ -57,9 +56,6 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.sell:
-            # send_post([self.image_1.url, self.image_2.url, self.image_3.url], caption=self.text)
+            send_post([self.image_1.path, self.image_2.path, self.image_3.path], caption=self.text)
             pass
         super().save(*args, **kwargs)
-
-
-
