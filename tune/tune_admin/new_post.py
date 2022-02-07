@@ -20,5 +20,4 @@ def send_post(media: list, caption):
         telebot.types.InputMediaPhoto(f1, caption=caption),
         telebot.types.InputMediaPhoto(f2),
         telebot.types.InputMediaPhoto(f3),
-
     ])

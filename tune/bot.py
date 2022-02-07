@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 import time
 from pprint import pprint
-
 import telebot
 from data import get_category, get_products, get_detail_product
 
-API_KEY = 'https://api.telegram.org/bot5292093759:AAEV6_CcQveXLkgLeVO47Fg6MrJJ4cLVl8E/'
-token = '5292093759:AAEV6_CcQveXLkgLeVO47Fg6MrJJ4cLVl8E'
+API_KEY = 'https://api.telegram.org/bot5292093759:AAHrxxCOr58zIQzmzaxZ98-IYucJE4pmFWs/'
+token = '5292093759:AAHrxxCOr58zIQzmzaxZ98-IYucJE4pmFWs'
 client = telebot.TeleBot(token)
 chat_id = -1001392557374
 
@@ -27,7 +26,6 @@ def start_message(message):
 
 @client.message_handler(content_types=['text'])
 def get_all_product(message):
-    pprint(message.chat.id)
     if message.text in category_list:
         idc = [x[0] for x in category_all if x[1] == message.text][0]
         products = [[x[0]] for x in get_products(idc)]
@@ -60,9 +58,9 @@ def get_all_product(message):
                 f1, f2, f3 = open('default.jpg', 'rb'), open('default.jpg', 'rb'), open('default.jpg', 'rb')
                 f1, f2, f3 = f1.read(), f2.read(), f3.read()
             client.send_media_group(chat_id=message.chat.id, media=[
-                telebot.types.InputMediaPhoto(f1, caption=detail_product[8]),
-                telebot.types.InputMediaPhoto(f2),
-                telebot.types.InputMediaPhoto(f3),
+            telebot.types.InputMediaPhoto(f1, caption=detail_product[8]),
+            telebot.types.InputMediaPhoto(f2),
+            telebot.types.InputMediaPhoto(f3),
 
             ])
         except:
@@ -75,6 +73,7 @@ def get_all_product(message):
                                 text='Найдём что-то другое? 🙃',
                                 reply_markup=keyboard_category)
             return 0
+
         keyboard_category = telebot.types.ReplyKeyboardMarkup(True, True)
         keyboard_category.keyboard = categories
         client.send_message(chat_id=message.chat.id,
@@ -87,5 +86,4 @@ def get_all_product(message):
                         text='Что ещё посмотрим? ',
                         reply_markup=keyboard_category)
 
-
-client.polling(non_stop=True)
+client.polling(none_stop=True)
