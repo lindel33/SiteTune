@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from django.db import models
 from .text_default import text_default
 from .new_post import send_post
@@ -46,19 +48,10 @@ class Product(models.Model):
                                 upload_to='media',
                                 null=False,
                                 default='default.jpg')
-    image_4 = models.ImageField('Картинка 4',
-                                upload_to='media',
-                                null=True,
-                                blank=True,
-                                default='default.jpg')
-    image_5 = models.ImageField('Картинка 5',
-                                upload_to='media',
-                                null=True,
-                                blank=True,
-                                default='default.jpg')
 
-    name = models.CharField('Название', max_length=100, null=False)
+    name = models.CharField('Название/Модель/Цена', max_length=150, null=False)
     article = models.CharField('Артикул', max_length=50, null=False)
+
     text = models.TextField('Описание', max_length=5000, null=False, default=text_default)
     sell = models.BooleanField('Продано', default=False)
 
@@ -74,8 +67,9 @@ class Product(models.Model):
         verbose_name_plural = 'Посты'
 
     def save(self, *args, **kwargs):
-        if not self.sell:
-            send_post([self.image_1.path,
-                       self.image_2.path,
-                       self.image_3.path], caption=self.text)
+        # if not self.sell:
+        #     send_post([self.image_1.path,
+        #                self.image_2.path,
+        #                self.image_3.path], caption=self.text)
+
         super().save(*args, **kwargs)

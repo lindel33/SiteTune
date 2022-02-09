@@ -1,14 +1,16 @@
+import time
 from pprint import pprint
 
 import telebot
 
-API_KEY = 'https://api.telegram.org/bot5292093759:AAEV6_CcQveXLkgLeVO47Fg6MrJJ4cLVl8E/'
-token = '5292093759:AAEV6_CcQveXLkgLeVO47Fg6MrJJ4cLVl8E'
+# API_KEY = 'https://api.telegram.org/bot5239855839:AAGpK1VN7Lr2LDkq0WRC4onTLbYTWyrcc3g/'
+token = '5239855839:AAGpK1VN7Lr2LDkq0WRC4onTLbYTWyrcc3g'
 bot = telebot.TeleBot(token)
-chat_id = -1001392557374
+chat_id = -1001634300078
 
 
 def send_post(media: list, caption):
+    time.sleep(2)
     pprint(media)
     f1 = open(media[0], 'rb')
     f1 = f1.read()
