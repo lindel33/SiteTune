@@ -7,7 +7,12 @@ import datetime
 
 today = datetime.date.today()
 tomorrow = today + datetime.timedelta(days=4)
-
+states = [('Отличное', 'Состояние отличное'),
+          ('Хорошо', 'Состояние хорошо'),
+          ('Среднее', 'Состояние Среднее'),
+          ]
+default_guaranty = 'Гарантия от магазина на проверку 3 месяца !✅'
+default_text = text_default
 
 class Category(models.Model):
     category = models.CharField('Категория', max_length=100)
@@ -37,28 +42,29 @@ class Product(models.Model):
     """
 
     image_1 = models.ImageField('Картинка 1',
-                                upload_to='media',
+                                upload_to='',
                                 null=False,
-                                default='default.jpg')
+                                )
     image_2 = models.ImageField('Картинка 2',
-                                upload_to='media',
+                                upload_to='',
                                 null=False,
-                                default='default.jpg')
+                                )
     image_3 = models.ImageField('Картинка 3',
-                                upload_to='media',
+                                upload_to='',
                                 null=False,
-                                default='default.jpg')
+                                )
+    sell = models.BooleanField('Продано?', default=False)
+    price = models.SmallIntegerField('Цена')
+    name = models.CharField('Название', help_text='Пример iPhone 7 128 Blue', max_length=150, null=False)
+    article = models.CharField('Код товара', max_length=15, null=False)
+    state = models.TextField('Состояние', choices=states, null=False)
+    kit = models.CharField('Комплект', max_length=150, null=False)
+    guaranty = models.CharField('Комплет', max_length=255, null=False, default=default_guaranty)
 
-    name = models.CharField('Название/Модель/Цена', max_length=150, null=False)
-    article = models.CharField('Артикул', max_length=50, null=False)
-
-    text = models.TextField('Описание', max_length=5000, null=False, default=text_default)
-    sell = models.BooleanField('Продано', default=False)
-
+    base_text = models.TextField('Нижняя подпись к посту', null=False, default=default_text)
     day_created = models.DateTimeField('Дата создания', auto_now_add=True)
     next_edition = models.DateTimeField('Дата новой публикации', null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,
-                                 verbose_name='Категория')
+
     series = models.ForeignKey(SeriesCategory, on_delete=models.CASCADE,
                                verbose_name='Серия', null=True, blank=True)
 
@@ -67,9 +73,18 @@ class Product(models.Model):
         verbose_name_plural = 'Посты'
 
     def save(self, *args, **kwargs):
-        # if not self.sell:
-        #     send_post([self.image_1.path,
-        #                self.image_2.path,
-        #                self.image_3.path], caption=self.text)
-
         super().save(*args, **kwargs)
+
+        if not self.sell:
+            send_post([self.image_1.url,
+                       self.image_2.url,
+                       self.image_3.url], caption=self.text)
+
+
+class ActualPrice(models.Model):
+    type = models.CharField('Тип товара', max_length=100)
+    price = models.TextField('Прайс')
+
+    class Meta:
+        verbose_name = 'Актуальные цены'
+        verbose_name_plural = 'Актуальные цены'

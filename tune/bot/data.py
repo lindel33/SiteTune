@@ -71,3 +71,19 @@ def get_re_messages():
     cursor.execute(sql)
 
     return cursor.fetchall()
+
+
+def get_not_category():
+    sql = f"SELECT name FROM tune_admin_product WHERE category_id = 12"
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    result = [x[0].split()[0] for x in result]
+    return result
+pprint(get_not_category())
+
+def get_filter_price(name, price):
+    sql = f"SELECT name FROM tune_admin_product WHERE category_id = 12"
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    result = [x[0].split()[0] for x in result]
+    return result

@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import Product, Category, SeriesCategory
+from .models import Product, Category, SeriesCategory, ActualPrice
 
 
 @admin.register(Product)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['name', 'article', 'category', 'series', 'sell', 'day_created', 'next_edition', ]
+    list_display = ['name', 'price', 'article', 'category', 'series', 'sell', 'day_created', 'next_edition', ]
 
     def image_show(self, obj):
         if obj.image_1:
@@ -23,3 +23,8 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(SeriesCategory)
 class PostAdmin(admin.ModelAdmin):
     list_display = ['category', ]
+
+
+@admin.register(ActualPrice)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ['type', ]
