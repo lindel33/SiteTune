@@ -5,7 +5,7 @@ from .models import Product, Category, SeriesCategory, ActualPrice
 
 @admin.register(Product)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'article', 'category', 'series', 'sell', 'day_created', 'next_edition', ]
+    list_display = ['article', ]
 
     def image_show(self, obj):
         if obj.image_1:

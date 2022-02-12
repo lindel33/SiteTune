@@ -1,5 +1,4 @@
 from pprint import pprint
-
 from django.db import models
 from .text_default import text_default
 from .new_post import send_post
@@ -13,6 +12,7 @@ states = [('Отличное', 'Состояние отличное'),
           ]
 default_guaranty = 'Гарантия от магазина на проверку 3 месяца !✅'
 default_text = text_default
+
 
 class Category(models.Model):
     category = models.CharField('Категория', max_length=100)
@@ -65,6 +65,8 @@ class Product(models.Model):
     day_created = models.DateTimeField('Дата создания', auto_now_add=True)
     next_edition = models.DateTimeField('Дата новой публикации', null=True, blank=True)
 
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,
+                                 verbose_name='Модель', null=True, blank=True)
     series = models.ForeignKey(SeriesCategory, on_delete=models.CASCADE,
                                verbose_name='Серия', null=True, blank=True)
 

@@ -43,35 +43,18 @@ def get_series(name_series):
 
 
 def get_detail_product(name_product):
+
     sql = f"SELECT * FROM tune_admin_product WHERE name = '{name_product}'"
     cursor.execute(sql)
 
     return cursor.fetchall()[0]
+# pprint(get_detail_product('iPhone 7 Plus 128 Space gray - 15.990'))
 
-
-def get_all_products():
-    sql = f"SELECT name FROM tune_admin_product WHERE sell != 1"
+def get_models(name_model):
+    sql = f"SELECT * FROM tune_admin_product WHERE name = '{name_model}'"
     cursor.execute(sql)
 
-    return cursor.fetchall()
-
-
-def get_re_messages():
-    import datetime
-
-    today = datetime.datetime.today()
-    tomorrow = today + datetime.timedelta(days=1)
-    """
-    Возвращает все посты к пересылке
-    :return:
-    """
-    sql = f"SELECT image_1, image_2, image_3, text " \
-          f" FROM tune_admin_product WHERE sell != 1" \
-          f" and next_edition < '{today}' and next_edition < '{tomorrow}'"
-    cursor.execute(sql)
-
-    return cursor.fetchall()
-
+    return cursor.fetchall()[0]
 
 def get_not_category():
     sql = f"SELECT name FROM tune_admin_product WHERE category_id = 12"
@@ -79,11 +62,18 @@ def get_not_category():
     result = cursor.fetchall()
     result = [x[0].split()[0] for x in result]
     return result
-pprint(get_not_category())
 
-def get_filter_price(name, price):
-    sql = f"SELECT name FROM tune_admin_product WHERE category_id = 12"
+
+def filter_price(price_min, price_max):
+    sql = f"SELECT name FROM tune_admin_product" \
+          f" WHERE price >= '{price_min}' AND price <= '{price_max}'"
     cursor.execute(sql)
-    result = cursor.fetchall()
-    result = [x[0].split()[0] for x in result]
-    return result
+
+    return cursor.fetchall()
+
+
+def get_actual_price(name_type):
+    sql = f"SELECT * FROM tune_admin_actualprice WHERE type = '{name_type}'"
+    cursor.execute(sql)
+
+    return cursor.fetchall()

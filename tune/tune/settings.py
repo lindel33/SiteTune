@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tune_admin',
+    'bot_telegram',
 ]
 
 MIDDLEWARE = [
